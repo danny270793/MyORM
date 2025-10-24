@@ -40,6 +40,13 @@ export class DatabaseManager {
         return stmt.all(...statement.params);
     }
 
+    static execute(query: Query): void {
+        const statement: PreparedStatement = query.toPreparedStatement();
+        const instance: DatabaseManager = DatabaseManager.getInstance();
+        const stmt = instance.db.prepare(statement.sql);
+        stmt.run(...statement.params);
+    }
+
     getConnection(): Database.Database {
         return this.db;
     }
