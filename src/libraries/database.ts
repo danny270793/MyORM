@@ -1,7 +1,7 @@
 import Database from "better-sqlite3";
 import { PreparedStatement, Query } from "./basics/query";
 
-class DatabaseManager {
+export class DatabaseManager {
     private static instance: DatabaseManager;
     private readonly db: Database.Database;
 
@@ -18,7 +18,7 @@ class DatabaseManager {
 
     static fetch(query: Query): number | bigint {
         const statement: PreparedStatement = query.toPreparedStatement();
-        
+
         const instance: DatabaseManager = DatabaseManager.getInstance();
         const stmt = instance.db.prepare(statement.sql);
         const result = stmt.run(...statement.params);
@@ -48,6 +48,3 @@ class DatabaseManager {
         this.db.close();
     }
 }
-
-export default DatabaseManager;
-
