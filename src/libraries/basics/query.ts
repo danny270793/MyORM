@@ -19,7 +19,7 @@ export abstract class Query {
         }
     }
 
-    abstract toSQL(): PreparedStatement
+    abstract toPreparedStatement(): PreparedStatement
 }
 
 export abstract class FiltrableQuery extends Query {
