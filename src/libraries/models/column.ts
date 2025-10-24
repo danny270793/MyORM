@@ -19,4 +19,8 @@ export class Column {
     getName(): string {
         return this.name;
     }
+
+    getType(): string {
+        return this.type;
+    }
 }
