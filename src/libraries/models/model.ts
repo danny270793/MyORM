@@ -1,6 +1,7 @@
 import { Column } from "./column";
 import { Insert } from "../basics/insert";
 import { Select } from "../basics/select";
+import { Update } from "../basics/update";
 import { DatabaseManager } from "../database";
 import { Query } from "../basics/query";
 
@@ -107,13 +108,59 @@ export abstract class Model {
         return instances;
     }
 
-    abstract getId(): string;
+    abstract getId(): string | number;
     
     async save(): Promise<void> {
-        if (this.getId()) {
-            // TODO: Update data to database
+        const tableName: string = (this.constructor as any).getTableName();
+        const id: string | number = this.getId();
+        
+        if (id) {
+            // Update existing record
+            const updateData: Record<string, any> = {};
+            
+            for (const key in this) {
+                if ((this as any)[key] instanceof Column) {
+                    const column: Column = (this as any)[key];
+                    const columnName: string = column.getName();
+                    
+                    // Skip the id column in update
+                    if (columnName !== 'id') {
+                        updateData[columnName] = column.get();
+                    }
+                }
+            }
+            
+            const query: Query = Update.table(tableName)
+                .set(updateData)
+                .where({
+                    field: "id",
+                    operator: "=",
+                    value: id
+                });
+            
+            DatabaseManager.execute(query);
         } else {
-            // TODO: Create data in database
+            // Create new record
+            const insertData: Record<string, any> = {};
+            
+            for (const key in this) {
+                if ((this as any)[key] instanceof Column) {
+                    const column: Column = (this as any)[key];
+                    const columnName: string = column.getName();
+                    
+                    // Skip the id column if it's not set
+                    if (columnName !== 'id') {
+                        insertData[columnName] = column.get();
+                    }
+                }
+            }
+            
+            const query: Query = Insert.into(tableName).rows(insertData);
+            const lastInsertedId: number | bigint = DatabaseManager.fetch(query);
+            
+            if (lastInsertedId && (this as any).id instanceof Column) {
+                (this as any).id.set(lastInsertedId);
+            }
         }
     }
 
