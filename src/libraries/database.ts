@@ -17,9 +17,9 @@ class DatabaseManager {
     }
 
     static fetch(query: Query): number | bigint {
-        const instance: DatabaseManager = DatabaseManager.getInstance();
-        
         const statement: PreparedStatement = query.toPreparedStatement();
+        
+        const instance: DatabaseManager = DatabaseManager.getInstance();
         const stmt = instance.db.prepare(statement.sql);
         const result = stmt.run(...statement.params);
 
@@ -42,11 +42,6 @@ class DatabaseManager {
 
     getConnection(): Database.Database {
         return this.db;
-    }
-
-    query(statement: PreparedStatement): any[] {
-        const stmt = this.db.prepare(statement.sql);
-        return stmt.all(...statement.params);
     }
 
     close(): void {
