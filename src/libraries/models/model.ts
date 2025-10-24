@@ -1,5 +1,6 @@
 import { Column } from "./column";
 import Insert from "../basics/insert";
+import Select from "../basics/select";
 import DatabaseManager from "../database";
 
 export abstract class Model {
@@ -11,6 +12,22 @@ export abstract class Model {
                 offset > 0 ? `_${p1.toLowerCase()}` : p1.toLowerCase()
             )
             .toLowerCase();
+    }
+    
+    private static convertFromSQLite(value: any, type: string): any {
+        if (value === null || value === undefined) {
+            return value;
+        }
+        
+        // Convert SQLite values back to their original types
+        switch (type) {
+            case "boolean":
+                return value === 1 || value === true;
+            case "date":
+                return typeof value === "string" ? new Date(value) : value;
+            default:
+                return value;
+        }
     }
 
     static async create<T extends Model>(this: new () => T, data: Record<string, any>): Promise<T> {
@@ -52,14 +69,38 @@ export abstract class Model {
     }
     
     static async find<T extends Model>(this: new () => T, id: string): Promise<T> {
-        // TODO: Get data from database
-        const data: Record<string, any> = { id };
+        const tableName = (this as any).getTableName();
         
+        // Create SELECT query with WHERE clause
+        const selectQuery = Select.from(tableName).where({
+            field: "id",
+            operator: "=",
+            value: id
+        });
+        const statement = selectQuery.toSQL();
+        
+        // Execute query
+        const db = DatabaseManager.getInstance();
+        const row = db.queryOne(statement);
+        
+        // Check if record exists
+        if (!row) {
+            throw new Error(`${this.name} with id ${id} not found`);
+        }
+        
+        // Create instance and populate columns
         const instance = new this();
         
-        for (const key in data) {
+        for (const key in instance) {
             if ((instance as any)[key] instanceof Column) {
-                (instance as any)[key].set(data[key]);
+                const column = (instance as any)[key] as Column;
+                const columnName = column.getName();
+                const columnType = column.getType();
+                
+                if (row[columnName] !== undefined) {
+                    const convertedValue = (this as any).convertFromSQLite(row[columnName], columnType);
+                    column.set(convertedValue);
+                }
             }
         }
         
