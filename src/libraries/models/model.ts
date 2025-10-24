@@ -1,28 +1,8 @@
-export class Column {
-    private readonly name: string;
-    private readonly type: string;
-    private value: any;
-
-    constructor(name: string, type: string) {
-        this.name = name;
-        this.type = type;
-    }
-
-    set(value: any): void {
-        this.value = value;
-    }
-
-    get(): any {
-        return this.value;
-    }
-
-    getName(): string {
-        return this.name;
-    }
-}
+import { Column } from "./column";
 
 export abstract class Model {
     static async create<T extends Model>(this: new () => T, data: Record<string, any>): Promise<T> {
+        // TODO: Create data in database
         const instance = new this();
         
         for (const key in data) {
@@ -41,7 +21,7 @@ export abstract class Model {
         const instance = new this();
         
         for (const key in data) {
-            if (key !== 'id' && (instance as any)[key] instanceof Column) {
+            if ((instance as any)[key] instanceof Column) {
                 (instance as any)[key].set(data[key]);
             }
         }
