@@ -1,12 +1,11 @@
 import Database from "better-sqlite3";
-import { PreparedStatement } from "./basics/query";
+import { PreparedStatement, Query } from "./basics/query";
 
 class DatabaseManager {
     private static instance: DatabaseManager;
     private readonly db: Database.Database;
 
     private constructor() {
-        // Initialize with an in-memory database or file-based
         this.db = new Database(":memory:", { verbose: console.log });
     }
 
@@ -17,23 +16,30 @@ class DatabaseManager {
         return DatabaseManager.instance;
     }
 
-    getConnection(): Database.Database {
-        return this.db;
+    static fetch(query: Query): number | bigint {
+        const instance: DatabaseManager = DatabaseManager.getInstance();
+        
+        const statement: PreparedStatement = query.toPreparedStatement();
+        const stmt = instance.db.prepare(statement.sql);
+        const result = stmt.run(...statement.params);
+
+        return result.lastInsertRowid;
     }
 
-    execute(statement: PreparedStatement): Database.RunResult {
-        const stmt = this.db.prepare(statement.sql);
-        return stmt.run(...statement.params);
+    static queryOne(query: Query): any {
+        const statement: PreparedStatement = query.toPreparedStatement();
+        const instance: DatabaseManager = DatabaseManager.getInstance();
+        const stmt = instance.db.prepare(statement.sql);
+        return stmt.get(...statement.params);
+    }
+
+    getConnection(): Database.Database {
+        return this.db;
     }
 
     query(statement: PreparedStatement): any[] {
         const stmt = this.db.prepare(statement.sql);
         return stmt.all(...statement.params);
-    }
-
-    queryOne(statement: PreparedStatement): any {
-        const stmt = this.db.prepare(statement.sql);
-        return stmt.get(...statement.params);
     }
 
     close(): void {
