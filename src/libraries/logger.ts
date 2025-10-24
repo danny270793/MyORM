@@ -6,9 +6,9 @@ export class Logger {
 
     write(tag: string, ...messages: any[]): void {
         if(tag === 'ERROR') {
-            console.error(`${tag}\t${this.name}\t`, messages);
+            console.error(`${tag}\t${this.name}\t`, ...messages);
         } else {
-            console.log(`${tag}\t${this.name}\t`, messages);
+            console.log(`${tag}\t${this.name}\t`, ...messages);
         }
     }
 
