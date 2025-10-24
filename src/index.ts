@@ -1,4 +1,5 @@
-import { Column, Model } from "./libraries/model";
+import { Model } from "./libraries/models/model";
+import { Column } from "./libraries/models/column";
 
 class User extends Model {
     getId(): string {
