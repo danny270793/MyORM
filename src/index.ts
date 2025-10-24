@@ -6,7 +6,7 @@ import { Logger } from "./libraries/logger";
 const logger = new Logger('./src/index.ts');
 
 class User extends Model {
-    getId(): string {
+    getId(): string | number {
         return this.id.get();
     }
 
