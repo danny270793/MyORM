@@ -10,7 +10,7 @@ class User extends Model {
         return this.id.get();
     }
 
-    id: Column = new Column("id", "string")
+    id: Column = new Column("id", "number")
     name: Column = new Column("name", "string")
     email: Column = new Column("email", "string")
     active: Column = new Column("active", "boolean")
@@ -21,7 +21,7 @@ class User extends Model {
 async function main(): Promise<void> {
     // Initialize database schema
     Schema.createTable("user", {
-        id: "TEXT PRIMARY KEY",
+        id: "INTEGER PRIMARY KEY AUTOINCREMENT",
         name: "TEXT",
         email: "TEXT",
         active: "INTEGER",
@@ -29,7 +29,6 @@ async function main(): Promise<void> {
     });
     
     const newUser: User = await User.create({
-        id: "1",
         name: "John Doe",
         email: "john.doe@example.com",
         active: true,
