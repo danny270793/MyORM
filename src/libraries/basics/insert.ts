@@ -1,6 +1,6 @@
 import { FiltrableQuery, PreparedStatement } from "./query";
 
-export default class Insert extends FiltrableQuery {
+export class Insert extends FiltrableQuery {
     private readonly dataRows: Array<Record<string, any>> = [];
 
     static into(tableName: string): Insert {
