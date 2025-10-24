@@ -2,6 +2,7 @@ import { Column } from "./column";
 import { Insert } from "../basics/insert";
 import { Select } from "../basics/select";
 import { Update } from "../basics/update";
+import { Delete } from "../basics/delete";
 import { DatabaseManager } from "../database";
 import { Query } from "../basics/query";
 
@@ -165,10 +166,20 @@ export abstract class Model {
     }
 
     async delete(): Promise<void> {
-        if (!this.getId()) {
+        const id: string | number = this.getId();
+        
+        if (!id) {
             throw new Error("Model not saved in database yet");
         }
-        // TODO: Delete data from database
+        
+        const tableName: string = (this.constructor as any).getTableName();
+        const query: Query = Delete.from(tableName).where({
+            field: "id",
+            operator: "=",
+            value: id
+        });
+        
+        DatabaseManager.execute(query);
     }
     
     private toData(): Record<string, any> {
