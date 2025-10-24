@@ -1,5 +1,6 @@
 import { Model } from "./libraries/models/model";
 import { Column } from "./libraries/models/column";
+import { Schema } from "./libraries/schema";
 
 class User extends Model {
     getId(): string {
@@ -15,6 +16,15 @@ class User extends Model {
 
 
 async function main(): Promise<void> {
+    // Initialize database schema
+    Schema.createTable("user", {
+        id: "TEXT PRIMARY KEY",
+        name: "TEXT",
+        email: "TEXT",
+        active: "INTEGER",
+        lastLogin: "TEXT"
+    });
+    
     const newUser: User = await User.create({
         id: "1",
         name: "John Doe",
