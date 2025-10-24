@@ -1,4 +1,4 @@
-import DatabaseManager from "./database";
+import { DatabaseManager } from "./database";
 
 export class Schema {
     static createTable(tableName: string, columns: Record<string, string>): void {
