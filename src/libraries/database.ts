@@ -33,6 +33,13 @@ class DatabaseManager {
         return stmt.get(...statement.params);
     }
 
+    static queryAll(query: Query): any[] {
+        const statement: PreparedStatement = query.toPreparedStatement();
+        const instance: DatabaseManager = DatabaseManager.getInstance();
+        const stmt = instance.db.prepare(statement.sql);
+        return stmt.all(...statement.params);
+    }
+
     getConnection(): Database.Database {
         return this.db;
     }
