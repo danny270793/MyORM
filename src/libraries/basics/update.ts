@@ -1,6 +1,6 @@
 import { FiltrableQuery, PreparedStatement } from "./query";
 
-export default class Update extends FiltrableQuery {
+export class Update extends FiltrableQuery {
     private rows: Record<string, any> = {};
 
     static table(tableName: string): Update {
