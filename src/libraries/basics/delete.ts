@@ -5,7 +5,7 @@ export default class Delete extends FiltrableQuery {
         return new Delete(tableName);
     }
 
-    toSQL(): PreparedStatement {
+    toPreparedStatement(): PreparedStatement {
         // Reset params for fresh query generation
         this.params = [];
 

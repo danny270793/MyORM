@@ -12,7 +12,7 @@ export default class Update extends FiltrableQuery {
         return this;
     }
 
-    toSQL(): PreparedStatement {
+    toPreparedStatement(): PreparedStatement {
         const keys = Object.keys(this.rows);
         if (keys.length === 0) {
             throw new Error("No data provided for UPDATE");

@@ -12,7 +12,7 @@ export default class Insert extends FiltrableQuery {
         return this;
     }
 
-    toSQL(): PreparedStatement {
+    toPreparedStatement(): PreparedStatement {
         if (this.dataRows.length === 0) {
             throw new Error("No data provided for INSERT");
         }
