@@ -1,6 +1,9 @@
 import { Model } from "./libraries/models/model";
 import { Column } from "./libraries/models/column";
 import { Schema } from "./libraries/schema";
+import { Logger } from "./libraries/logger";
+
+const logger = new Logger('./src/index.ts');
 
 class User extends Model {
     getId(): string {
@@ -32,19 +35,19 @@ async function main(): Promise<void> {
         active: true,
         lastLogin: new Date()
     });
-    console.log('user created', newUser);
+    logger.debug('user created', newUser);
 
     const users = await User.findAll();
-    console.log('users found', users);
+    logger.debug('users found', users);
 
     const user: User = await User.find("1");
     user.name.set("Jane Doe");
 
     await user.save();
-    console.log('user updated', user);
+    logger.debug('user updated', user);
 
     await user.delete();
-    console.log('user deleted', user);
+    logger.debug('user deleted', user);
 }
 
 main().catch(console.error);
