@@ -79,16 +79,25 @@ export abstract class Model {
     }
 
     static async findAll<T extends Model>(this: new () => T): Promise<T[]> {
-        // TODO: Get data from database
-        const rows: Record<string, any>[] = [];
+        const tableName: string = (this as any).getTableName();
+        
+        const query: Query = Select.from(tableName);
+        const rows: any[] = DatabaseManager.queryAll(query);
         
         const instances: T[] = [];
         for (const row of rows) {
-            const instance = new this();
+            const instance: any = new this();
             
-            for (const key in row) {
-                if (key !== 'id' && (instance as any)[key] instanceof Column) {
-                    (instance as any)[key].set(row[key]);
+            for (const key in instance) {
+                if (instance[key] instanceof Column) {
+                    const column: Column = instance[key];
+                    const columnName: string = column.getName();
+                    const columnType: string = column.getType();
+                    
+                    if (row[columnName] !== undefined) {
+                        const convertedValue: any = (this as any).convertFromSQLite(row[columnName], columnType);
+                        column.set(convertedValue);
+                    }
                 }
             }
             
