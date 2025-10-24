@@ -1,7 +1,7 @@
 import { Column } from "./column";
-import Insert from "../basics/insert";
-import Select from "../basics/select";
-import DatabaseManager from "../database";
+import { Insert } from "../basics/insert";
+import { Select } from "../basics/select";
+import { DatabaseManager } from "../database";
 import { Query } from "../basics/query";
 
 export abstract class Model {
