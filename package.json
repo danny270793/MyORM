@@ -1,8 +1,11 @@
 {
     "name": "@danny270793/myorm",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "files": [
+        "dist/**/*"
+    ],
     "author": {
         "name": "Danny Vaca",
         "email": "danny270793@gmail.com",
