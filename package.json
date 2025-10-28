@@ -1,6 +1,6 @@
 {
     "name": "@danny270793/myorm",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
@@ -20,13 +20,12 @@
     },
     "scripts": {
         "build": "tsc",
-        "start": "node examples/basic-usage.js",
-        "example": "npm run build && node dist/examples/basic-usage.js",
         "format": "prettier . --write",
         "test": "vitest run",
         "test:watch": "vitest",
         "test:coverage": "vitest run --coverage",
-        "docs": "typedoc"
+        "docs": "typedoc",
+        "publish": "npm publish --access public"
     },
     "keywords": [
         "orm",
