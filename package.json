@@ -5,7 +5,10 @@
     "scripts": {
         "build": "tsc",
         "start": "node dist/index.js",
-        "format": "prettier . --write"
+        "format": "prettier . --write",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage"
     },
     "keywords": [],
     "author": "",
@@ -13,8 +16,10 @@
     "description": "",
     "devDependencies": {
         "@types/better-sqlite3": "^7.6.13",
+        "@vitest/coverage-v8": "^3.0.0",
         "prettier": "3.6.2",
-        "typescript": "^5.9.3"
+        "typescript": "^5.9.3",
+        "vitest": "^3.0.0"
     },
     "dependencies": {
         "better-sqlite3": "^12.4.1"
