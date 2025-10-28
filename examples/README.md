@@ -96,7 +96,7 @@ npm run example
 
 ---
 
-### Basic Usage (`basic-usage.ts`)
+### Basic Usage (`5-basic-usage.ts`)
 
 The original example demonstrating a complete workflow:
 - Setting up migrations
