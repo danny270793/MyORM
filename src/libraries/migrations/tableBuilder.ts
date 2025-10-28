@@ -21,64 +21,68 @@ export class TableBuilder {
     }
 
     toSQL(): string {
-        const columnDefs = this.columns.map(col => {
-            const parts: string[] = [`${col.name} ${this.mapTypeToSQL(col.type)}`];
-            
+        const columnDefs = this.columns.map((col) => {
+            const parts: string[] = [
+                `${col.name} ${this.mapTypeToSQL(col.type)}`,
+            ];
+
             if (col.primaryKey) {
-                parts.push("PRIMARY KEY");
+                parts.push('PRIMARY KEY');
             }
-            
+
             if (col.autoIncrement) {
-                parts.push("AUTOINCREMENT");
+                parts.push('AUTOINCREMENT');
             }
-            
+
             if (col.unique) {
-                parts.push("UNIQUE");
+                parts.push('UNIQUE');
             }
-            
+
             if (col.notNull) {
-                parts.push("NOT NULL");
+                parts.push('NOT NULL');
             }
-            
+
             if (col.nullable && !col.notNull && !col.primaryKey) {
                 // NULL is default in SQLite, but we can be explicit
-                parts.push("NULL");
+                parts.push('NULL');
             }
-            
+
             if (col.defaultValue !== undefined) {
-                parts.push(`DEFAULT ${this.formatDefaultValue(col.defaultValue)}`);
+                parts.push(
+                    `DEFAULT ${this.formatDefaultValue(col.defaultValue)}`,
+                );
             }
-            
-            return parts.join(" ");
+
+            return parts.join(' ');
         });
-        
-        return `CREATE TABLE IF NOT EXISTS ${this.tableName} (${columnDefs.join(", ")})`;
+
+        return `CREATE TABLE IF NOT EXISTS ${this.tableName} (${columnDefs.join(', ')})`;
     }
 
     private mapTypeToSQL(type: string): string {
         switch (type) {
-            case "number":
-                return "INTEGER";
-            case "string":
-                return "TEXT";
-            case "boolean":
-                return "INTEGER"; // SQLite uses 0/1 for booleans
-            case "date":
-                return "TEXT"; // SQLite stores dates as TEXT or INTEGER
+            case 'number':
+                return 'INTEGER';
+            case 'string':
+                return 'TEXT';
+            case 'boolean':
+                return 'INTEGER'; // SQLite uses 0/1 for booleans
+            case 'date':
+                return 'TEXT'; // SQLite stores dates as TEXT or INTEGER
             default:
-                return "TEXT";
+                return 'TEXT';
         }
     }
 
     private formatDefaultValue(value: any): string {
         if (value === null) {
-            return "NULL";
+            return 'NULL';
         }
-        if (typeof value === "string") {
+        if (typeof value === 'string') {
             return `'${value.replaceAll("'", "''")}'`;
         }
-        if (typeof value === "boolean") {
-            return value ? "1" : "0";
+        if (typeof value === 'boolean') {
+            return value ? '1' : '0';
         }
         if (value instanceof Date) {
             return `'${value.toISOString()}'`;
@@ -104,7 +108,7 @@ export class ColumnBuilder {
     constructor(name: string, type: string) {
         this.definition = {
             name,
-            type
+            type,
         };
     }
 
@@ -142,4 +146,3 @@ export class ColumnBuilder {
         return this.definition;
     }
 }
-

@@ -1,4 +1,4 @@
-import { FiltrableQuery, PreparedStatement } from "./query";
+import { FiltrableQuery, PreparedStatement } from './query';
 
 export class Select extends FiltrableQuery {
     static from(tableName: string): Select {
@@ -17,7 +17,7 @@ export class Select extends FiltrableQuery {
         return this;
     }
 
-    orderBy(field: string, direction: string = "asc"): this {
+    orderBy(field: string, direction: string = 'asc'): this {
         this.orderByClause = { field, direction };
         return this;
     }
@@ -46,13 +46,13 @@ export class Select extends FiltrableQuery {
         // Reset params for fresh query generation
         this.params = [];
 
-        let sql = "SELECT ";
+        let sql = 'SELECT ';
 
         // Add fields
         if (this.selectFields.length > 0) {
-            sql += this.selectFields.join(", ");
+            sql += this.selectFields.join(', ');
         } else {
-            sql += "*";
+            sql += '*';
         }
 
         // Add FROM clause

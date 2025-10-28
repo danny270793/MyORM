@@ -1,14 +1,14 @@
-import { DatabaseManager } from "./database";
-import { TableBuilder } from "./migrations/tableBuilder";
+import { DatabaseManager } from './database';
+import { TableBuilder } from './migrations/tableBuilder';
 
 export class Schema {
     private readonly db: DatabaseManager;
-    
+
     constructor() {
         this.db = DatabaseManager.getInstance();
         this.initMigrationsTable();
     }
-    
+
     private initMigrationsTable(): void {
         const sql = `CREATE TABLE IF NOT EXISTS migrations (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -18,11 +18,14 @@ export class Schema {
         )`;
         this.db.getConnection().prepare(sql).run();
     }
-    
-    createTable(tableName: string, callback: (table: TableBuilder) => void): void {
+
+    createTable(
+        tableName: string,
+        callback: (table: TableBuilder) => void,
+    ): void {
         const tableBuilder = new TableBuilder(tableName);
         callback(tableBuilder);
-        
+
         const sql = tableBuilder.toSQL();
         this.db.getConnection().prepare(sql).run();
     }
@@ -31,24 +34,33 @@ export class Schema {
         const sql = `DROP TABLE IF EXISTS ${tableName}`;
         this.db.getConnection().prepare(sql).run();
     }
-    
+
     isMigrationApplied(migrationNumber: number): boolean {
         const sql = `SELECT COUNT(*) as count FROM migrations WHERE migration_number = ?`;
-        const result = this.db.getConnection().prepare(sql).get(migrationNumber) as { count: number };
+        const result = this.db
+            .getConnection()
+            .prepare(sql)
+            .get(migrationNumber) as { count: number };
         return result.count > 0;
     }
-    
+
     recordMigration(migrationNumber: number, migrationName: string): void {
         const sql = `INSERT INTO migrations (migration_number, migration_name, applied_at) VALUES (?, ?, ?)`;
-        this.db.getConnection().prepare(sql).run(migrationNumber, migrationName, new Date().toISOString());
+        this.db
+            .getConnection()
+            .prepare(sql)
+            .run(migrationNumber, migrationName, new Date().toISOString());
     }
-    
-    static createTable(tableName: string, columns: Record<string, string>): void {
+
+    static createTable(
+        tableName: string,
+        columns: Record<string, string>,
+    ): void {
         const db = DatabaseManager.getInstance();
         const columnDefs = Object.entries(columns)
             .map(([name, type]) => `${name} ${type}`)
-            .join(", ");
-        
+            .join(', ');
+
         const sql = `CREATE TABLE IF NOT EXISTS ${tableName} (${columnDefs})`;
         db.getConnection().prepare(sql).run();
     }
@@ -59,4 +71,3 @@ export class Schema {
         db.getConnection().prepare(sql).run();
     }
 }
-
