@@ -7,7 +7,12 @@ import { DatabaseManager } from "../database";
 import { Query } from "../basics/query";
 
 export abstract class Model {
+    protected static tableName?: string;
+    
     protected static getTableName(): string {
+        if (this.tableName) {
+            return this.tableName;
+        }
         return this.name
             .replaceAll(/([A-Z])/g, (match, p1, offset) => 
                 offset > 0 ? `_${p1.toLowerCase()}` : p1.toLowerCase()
