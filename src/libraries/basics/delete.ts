@@ -1,4 +1,4 @@
-import { FiltrableQuery, PreparedStatement } from "./query";
+import { FiltrableQuery, PreparedStatement } from './query';
 
 export class Delete extends FiltrableQuery {
     static from(tableName: string): Delete {
@@ -11,7 +11,7 @@ export class Delete extends FiltrableQuery {
 
         let sql = `DELETE FROM ${this.tableName}`;
         sql += this.buildWhereClause();
-        
+
         return { sql, params: this.params };
     }
 }
