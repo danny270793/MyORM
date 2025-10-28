@@ -2,7 +2,7 @@ export interface WhereCondition {
     field: string;
     operator: string;
     value: any;
-    separator?: "and" | "or";
+    separator?: 'and' | 'or';
 }
 
 export interface PreparedStatement {
@@ -11,7 +11,7 @@ export interface PreparedStatement {
 }
 
 export abstract class Query {
-    protected tableName: string = "";
+    protected tableName: string = '';
 
     constructor(tableName?: string) {
         if (tableName) {
@@ -19,7 +19,7 @@ export abstract class Query {
         }
     }
 
-    abstract toPreparedStatement(): PreparedStatement
+    abstract toPreparedStatement(): PreparedStatement;
 }
 
 export abstract class FiltrableQuery extends Query {
@@ -33,26 +33,26 @@ export abstract class FiltrableQuery extends Query {
 
     protected addParam(value: any): string {
         if (value === undefined || value === null) {
-            return "NULL";
+            return 'NULL';
         }
-        
+
         // Convert values for SQLite compatibility
         let paramValue: any;
         if (value instanceof Date) {
             paramValue = value.toISOString();
-        } else if (typeof value === "boolean") {
+        } else if (typeof value === 'boolean') {
             paramValue = value ? 1 : 0;
         } else {
             paramValue = value;
         }
-        
+
         this.params.push(paramValue);
-        return "?";
+        return '?';
     }
 
     protected buildWhereClause(): string {
         if (this.whereClauses.length === 0) {
-            return "";
+            return '';
         }
 
         const conditions = this.whereClauses.map((clause, index) => {
@@ -61,10 +61,10 @@ export abstract class FiltrableQuery extends Query {
             if (index === 0) {
                 return condition;
             }
-            const separator = clause.separator?.toUpperCase() || "AND";
+            const separator = clause.separator?.toUpperCase() || 'AND';
             return `${separator} ${condition}`;
         });
 
-        return ` WHERE ${conditions.join(" ")}`;
+        return ` WHERE ${conditions.join(' ')}`;
     }
 }
