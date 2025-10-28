@@ -1,6 +1,6 @@
 import { FiltrableQuery, PreparedStatement } from "./query";
 
-export default class Insert extends FiltrableQuery {
+export class Insert extends FiltrableQuery {
     private readonly dataRows: Array<Record<string, any>> = [];
 
     static into(tableName: string): Insert {
@@ -12,7 +12,7 @@ export default class Insert extends FiltrableQuery {
         return this;
     }
 
-    toSQL(): PreparedStatement {
+    toPreparedStatement(): PreparedStatement {
         if (this.dataRows.length === 0) {
             throw new Error("No data provided for INSERT");
         }

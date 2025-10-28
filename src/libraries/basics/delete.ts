@@ -1,11 +1,11 @@
 import { FiltrableQuery, PreparedStatement } from "./query";
 
-export default class Delete extends FiltrableQuery {
+export class Delete extends FiltrableQuery {
     static from(tableName: string): Delete {
         return new Delete(tableName);
     }
 
-    toSQL(): PreparedStatement {
+    toPreparedStatement(): PreparedStatement {
         // Reset params for fresh query generation
         this.params = [];
 

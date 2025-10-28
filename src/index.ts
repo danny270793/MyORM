@@ -1,11 +1,16 @@
-import { Column, Model } from "./libraries/model";
+import { Model } from "./libraries/models/model";
+import { Column } from "./libraries/models/column";
+import { Schema } from "./libraries/schema";
+import { Logger } from "./libraries/logger";
+
+const logger = new Logger('./src/index.ts');
 
 class User extends Model {
-    getId(): string {
+    getId(): string | number {
         return this.id.get();
     }
 
-    id: Column = new Column("id", "string")
+    id: Column = new Column("id", "number")
     name: Column = new Column("name", "string")
     email: Column = new Column("email", "string")
     active: Column = new Column("active", "boolean")
@@ -14,26 +19,34 @@ class User extends Model {
 
 
 async function main(): Promise<void> {
+    // Initialize database schema
+    Schema.createTable("user", {
+        id: "INTEGER PRIMARY KEY AUTOINCREMENT",
+        name: "TEXT",
+        email: "TEXT",
+        active: "INTEGER",
+        lastLogin: "TEXT"
+    });
+    
     const newUser: User = await User.create({
-        id: "1",
         name: "John Doe",
         email: "john.doe@example.com",
         active: true,
         lastLogin: new Date()
     });
-    console.log('user created', newUser);
+    logger.debug('user created', newUser);
 
     const users = await User.findAll();
-    console.log('users found', users);
+    logger.debug('users found', users);
 
     const user: User = await User.find("1");
     user.name.set("Jane Doe");
 
     await user.save();
-    console.log('user updated', user);
+    logger.debug('user updated', user);
 
     await user.delete();
-    console.log('user deleted', user);
+    logger.debug('user deleted', user);
 }
 
 main().catch(console.error);

@@ -1,6 +1,6 @@
 import { FiltrableQuery, PreparedStatement } from "./query";
 
-export default class Select extends FiltrableQuery {
+export class Select extends FiltrableQuery {
     static from(tableName: string): Select {
         return new Select(tableName);
     }
@@ -42,7 +42,7 @@ export default class Select extends FiltrableQuery {
         return this;
     }
 
-    toSQL(): PreparedStatement {
+    toPreparedStatement(): PreparedStatement {
         // Reset params for fresh query generation
         this.params = [];
 

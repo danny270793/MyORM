@@ -19,7 +19,7 @@ export abstract class Query {
         }
     }
 
-    abstract toSQL(): PreparedStatement
+    abstract toPreparedStatement(): PreparedStatement
 }
 
 export abstract class FiltrableQuery extends Query {
@@ -35,8 +35,17 @@ export abstract class FiltrableQuery extends Query {
         if (value === undefined || value === null) {
             return "NULL";
         }
-        // Convert Date objects to ISO string for storage
-        const paramValue = value instanceof Date ? value.toISOString() : value;
+        
+        // Convert values for SQLite compatibility
+        let paramValue: any;
+        if (value instanceof Date) {
+            paramValue = value.toISOString();
+        } else if (typeof value === "boolean") {
+            paramValue = value ? 1 : 0;
+        } else {
+            paramValue = value;
+        }
+        
         this.params.push(paramValue);
         return "?";
     }

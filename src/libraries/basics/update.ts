@@ -1,6 +1,6 @@
 import { FiltrableQuery, PreparedStatement } from "./query";
 
-export default class Update extends FiltrableQuery {
+export class Update extends FiltrableQuery {
     private rows: Record<string, any> = {};
 
     static table(tableName: string): Update {
@@ -12,7 +12,7 @@ export default class Update extends FiltrableQuery {
         return this;
     }
 
-    toSQL(): PreparedStatement {
+    toPreparedStatement(): PreparedStatement {
         const keys = Object.keys(this.rows);
         if (keys.length === 0) {
             throw new Error("No data provided for UPDATE");
