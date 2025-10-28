@@ -1,31 +1,31 @@
-import { Logger } from './libraries/logger';
-import { User } from './models/user';
-import { Migrations } from './libraries/migrations';
+// Core Models
+export { Model } from './libraries/models/model';
+export { Column } from './libraries/models/column';
 
-const logger = new Logger('./src/index.ts');
+// Schema & Migrations
+export { Schema } from './libraries/schema';
+export { Migration } from './libraries/migrations/migration';
+export { Migrations } from './libraries/migrations';
+export {
+    TableBuilder,
+    ColumnBuilder,
+    type ColumnDefinition,
+} from './libraries/migrations/tableBuilder';
 
-async function main(): Promise<void> {
-    await Migrations.setup();
+// Query Builders
+export { Select } from './libraries/basics/select';
+export { Insert } from './libraries/basics/insert';
+export { Update } from './libraries/basics/update';
+export { Delete } from './libraries/basics/delete';
+export {
+    Query,
+    FiltrableQuery,
+    type WhereCondition,
+    type PreparedStatement,
+} from './libraries/basics/query';
 
-    const newUser: User = await User.create({
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        active: true,
-        lastLogin: new Date(),
-    });
-    logger.debug('user created', newUser);
+// Database
+export { DatabaseManager } from './libraries/database';
 
-    const users = await User.findAll();
-    logger.debug('users found', users);
-
-    const user: User = await User.find('1');
-    user.name.set('Jane Doe');
-
-    await user.save();
-    logger.debug('user updated', user);
-
-    await user.delete();
-    logger.debug('user deleted', user);
-}
-
-main().catch(console.error);
+// Utilities
+export { Logger } from './libraries/logger';
