@@ -3,6 +3,18 @@
     "version": "1.0.0",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "author": {
+        "name": "Danny Vaca",
+        "email": "danny270793@gmail.com",
+        "url": "https://danny270793.github.io/#/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/danny270793/myorm.git"
+    },
+    "bugs": {
+        "url": "https://github.com/danny270793/layout/issues"
+    },
     "scripts": {
         "build": "tsc",
         "start": "node examples/basic-usage.js",
@@ -12,10 +24,16 @@
         "test:watch": "vitest",
         "test:coverage": "vitest run --coverage"
     },
-    "keywords": [],
-    "author": "",
+    "keywords": [
+        "orm",
+        "sqlite",
+        "typescript",
+        "migrations",
+        "query builders",
+        "active record pattern"
+    ],
     "license": "MIT",
-    "description": "",
+    "description": "A lightweight, type-safe ORM for SQLite with TypeScript support, featuring migrations, query builders, and an Active Record pattern.",
     "devDependencies": {
         "@types/better-sqlite3": "^7.6.13",
         "@vitest/coverage-v8": "^3.0.0",
