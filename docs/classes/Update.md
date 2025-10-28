@@ -1,12 +1,12 @@
-[**@danny270793/myorm v1.0.0**](../README.md)
+[**@danny270793/myorm**](../README.md)
 
 ***
 
-[@danny270793/myorm](../globals.md) / Update
+[@danny270793/myorm](../README.md) / Update
 
 # Class: Update
 
-Defined in: [basics/update.ts:3](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/basics/update.ts#L3)
+Defined in: [basics/update.ts:3](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/basics/update.ts#L3)
 
 Abstract base class for queries that support WHERE clauses.
 
@@ -20,7 +20,7 @@ Abstract base class for queries that support WHERE clauses.
 
 > **new Update**(`tableName?`): `Update`
 
-Defined in: [basics/query.ts:31](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/basics/query.ts#L31)
+Defined in: [basics/query.ts:31](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/basics/query.ts#L31)
 
 #### Parameters
 
@@ -38,11 +38,23 @@ Defined in: [basics/query.ts:31](https://github.com/danny270793/MyORM/blob/9faec
 
 ## Properties
 
+### params
+
+> `protected` **params**: `any`[] = `[]`
+
+Defined in: [basics/query.ts:49](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/basics/query.ts#L49)
+
+#### Inherited from
+
+[`FiltrableQuery`](FiltrableQuery.md).[`params`](FiltrableQuery.md#params)
+
+***
+
 ### tableName
 
 > `protected` **tableName**: `string` = `''`
 
-Defined in: [basics/query.ts:29](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/basics/query.ts#L29)
+Defined in: [basics/query.ts:29](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/basics/query.ts#L29)
 
 #### Inherited from
 
@@ -54,67 +66,19 @@ Defined in: [basics/query.ts:29](https://github.com/danny270793/MyORM/blob/9faec
 
 > `protected` **whereClauses**: [`WhereCondition`](../interfaces/WhereCondition.md)[] = `[]`
 
-Defined in: [basics/query.ts:48](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/basics/query.ts#L48)
+Defined in: [basics/query.ts:48](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/basics/query.ts#L48)
 
 #### Inherited from
 
 [`FiltrableQuery`](FiltrableQuery.md).[`whereClauses`](FiltrableQuery.md#whereclauses)
 
-***
-
-### params
-
-> `protected` **params**: `any`[] = `[]`
-
-Defined in: [basics/query.ts:49](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/basics/query.ts#L49)
-
-#### Inherited from
-
-[`FiltrableQuery`](FiltrableQuery.md).[`params`](FiltrableQuery.md#params)
-
-***
-
-### rows
-
-> `private` **rows**: `Record`\<`string`, `any`\> = `{}`
-
-Defined in: [basics/update.ts:4](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/basics/update.ts#L4)
-
 ## Methods
-
-### where()
-
-> **where**(...`conditions`): `this`
-
-Defined in: [basics/query.ts:56](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/basics/query.ts#L56)
-
-Adds WHERE conditions to the query.
-
-#### Parameters
-
-##### conditions
-
-...[`WhereCondition`](../interfaces/WhereCondition.md)[]
-
-One or more where conditions
-
-#### Returns
-
-`this`
-
-This query builder for chaining
-
-#### Inherited from
-
-[`FiltrableQuery`](FiltrableQuery.md).[`where`](FiltrableQuery.md#where)
-
-***
 
 ### addParam()
 
 > `protected` **addParam**(`value`): `string`
 
-Defined in: [basics/query.ts:68](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/basics/query.ts#L68)
+Defined in: [basics/query.ts:68](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/basics/query.ts#L68)
 
 **`Internal`**
 
@@ -145,7 +109,7 @@ The SQL placeholder ('?' or 'NULL')
 
 > `protected` **buildWhereClause**(): `string`
 
-Defined in: [basics/query.ts:92](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/basics/query.ts#L92)
+Defined in: [basics/query.ts:92](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/basics/query.ts#L92)
 
 **`Internal`**
 
@@ -163,29 +127,11 @@ The WHERE clause string
 
 ***
 
-### table()
-
-> `static` **table**(`tableName`): `Update`
-
-Defined in: [basics/update.ts:6](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/basics/update.ts#L6)
-
-#### Parameters
-
-##### tableName
-
-`string`
-
-#### Returns
-
-`Update`
-
-***
-
 ### set()
 
 > **set**(`rows`): `this`
 
-Defined in: [basics/update.ts:10](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/basics/update.ts#L10)
+Defined in: [basics/update.ts:10](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/basics/update.ts#L10)
 
 #### Parameters
 
@@ -203,7 +149,7 @@ Defined in: [basics/update.ts:10](https://github.com/danny270793/MyORM/blob/9fae
 
 > **toPreparedStatement**(): [`PreparedStatement`](../interfaces/PreparedStatement.md)
 
-Defined in: [basics/update.ts:15](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/basics/update.ts#L15)
+Defined in: [basics/update.ts:15](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/basics/update.ts#L15)
 
 Converts the query to a prepared statement with SQL and parameters.
 
@@ -216,3 +162,49 @@ The prepared statement
 #### Overrides
 
 [`FiltrableQuery`](FiltrableQuery.md).[`toPreparedStatement`](FiltrableQuery.md#topreparedstatement)
+
+***
+
+### where()
+
+> **where**(...`conditions`): `this`
+
+Defined in: [basics/query.ts:56](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/basics/query.ts#L56)
+
+Adds WHERE conditions to the query.
+
+#### Parameters
+
+##### conditions
+
+...[`WhereCondition`](../interfaces/WhereCondition.md)[]
+
+One or more where conditions
+
+#### Returns
+
+`this`
+
+This query builder for chaining
+
+#### Inherited from
+
+[`FiltrableQuery`](FiltrableQuery.md).[`where`](FiltrableQuery.md#where)
+
+***
+
+### table()
+
+> `static` **table**(`tableName`): `Update`
+
+Defined in: [basics/update.ts:6](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/basics/update.ts#L6)
+
+#### Parameters
+
+##### tableName
+
+`string`
+
+#### Returns
+
+`Update`

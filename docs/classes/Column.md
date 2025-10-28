@@ -1,12 +1,12 @@
-[**@danny270793/myorm v1.0.0**](../README.md)
+[**@danny270793/myorm**](../README.md)
 
 ***
 
-[@danny270793/myorm](../globals.md) / Column
+[@danny270793/myorm](../README.md) / Column
 
 # Class: Column
 
-Defined in: [models/column.ts:12](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/column.ts#L12)
+Defined in: [models/column.ts:12](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/column.ts#L12)
 
 Represents a database column with type information and value storage.
 Used by Model instances to store and retrieve column values with type safety.
@@ -25,7 +25,7 @@ console.log(nameColumn.get()); // 'John Doe'
 
 > **new Column**(`name`, `type`): `Column`
 
-Defined in: [models/column.ts:23](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/column.ts#L23)
+Defined in: [models/column.ts:23](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/column.ts#L23)
 
 Creates a new Column instance.
 
@@ -47,59 +47,13 @@ The column type ('string', 'number', 'boolean', 'date')
 
 `Column`
 
-## Properties
-
-### name
-
-> `private` `readonly` **name**: `string`
-
-Defined in: [models/column.ts:13](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/column.ts#L13)
-
-***
-
-### type
-
-> `private` `readonly` **type**: `string`
-
-Defined in: [models/column.ts:14](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/column.ts#L14)
-
-***
-
-### value
-
-> `private` **value**: `any`
-
-Defined in: [models/column.ts:15](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/column.ts#L15)
-
 ## Methods
-
-### set()
-
-> **set**(`value`): `void`
-
-Defined in: [models/column.ts:33](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/column.ts#L33)
-
-Sets the column value.
-
-#### Parameters
-
-##### value
-
-`any`
-
-The value to store in this column
-
-#### Returns
-
-`void`
-
-***
 
 ### get()
 
 > **get**(): `any`
 
-Defined in: [models/column.ts:42](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/column.ts#L42)
+Defined in: [models/column.ts:42](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/column.ts#L42)
 
 Gets the current column value.
 
@@ -115,7 +69,7 @@ The stored column value
 
 > **getName**(): `string`
 
-Defined in: [models/column.ts:51](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/column.ts#L51)
+Defined in: [models/column.ts:51](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/column.ts#L51)
 
 Gets the column name.
 
@@ -131,7 +85,7 @@ The database column name
 
 > **getType**(): `string`
 
-Defined in: [models/column.ts:60](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/column.ts#L60)
+Defined in: [models/column.ts:60](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/column.ts#L60)
 
 Gets the column type.
 
@@ -140,3 +94,25 @@ Gets the column type.
 `string`
 
 The column type ('string', 'number', 'boolean', 'date')
+
+***
+
+### set()
+
+> **set**(`value`): `void`
+
+Defined in: [models/column.ts:33](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/column.ts#L33)
+
+Sets the column value.
+
+#### Parameters
+
+##### value
+
+`any`
+
+The value to store in this column
+
+#### Returns
+
+`void`

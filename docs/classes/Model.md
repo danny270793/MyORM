@@ -1,12 +1,12 @@
-[**@danny270793/myorm v1.0.0**](../README.md)
+[**@danny270793/myorm**](../README.md)
 
 ***
 
-[@danny270793/myorm](../globals.md) / Model
+[@danny270793/myorm](../README.md) / Model
 
 # Abstract Class: Model
 
-Defined in: [models/model.ts:42](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/model.ts#L42)
+Defined in: [models/model.ts:42](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/model.ts#L42)
 
 Abstract base class for all database models following the Active Record pattern.
 Provides CRUD operations and automatic table name generation.
@@ -57,60 +57,78 @@ await found.delete();
 
 > `protected` `static` `optional` **tableName**: `string`
 
-Defined in: [models/model.ts:46](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/model.ts#L46)
+Defined in: [models/model.ts:46](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/model.ts#L46)
 
 Optional explicit table name. If not set, table name is derived from class name.
 
 ## Methods
 
-### getTableName()
+### delete()
 
-> `protected` `static` **getTableName**(): `string`
+> **delete**(): `Promise`\<`void`\>
 
-Defined in: [models/model.ts:55](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/model.ts#L55)
+Defined in: [models/model.ts:307](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/model.ts#L307)
 
-**`Internal`**
-
-Gets the table name for this model.
-If tableName is set explicitly, returns that; otherwise generates from class name.
+Deletes this model instance from the database.
 
 #### Returns
 
-`string`
+`Promise`\<`void`\>
 
-The table name
+A promise that resolves when the deletion is complete
+
+#### Throws
+
+If the model hasn't been saved to the database yet
+
+#### Example
+
+```typescript
+const user = await User.find('1');
+await user.delete();
+```
 
 ***
 
-### convertFromSQLite()
+### getId()
 
-> `private` `static` **convertFromSQLite**(`value`, `type`): `any`
+> `abstract` **getId**(): `string` \| `number`
 
-Defined in: [models/model.ts:74](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/model.ts#L74)
+Defined in: [models/model.ts:227](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/model.ts#L227)
 
-**`Internal`**
-
-Converts SQLite values to TypeScript types.
-
-#### Parameters
-
-##### value
-
-`any`
-
-The value from SQLite
-
-##### type
-
-`string`
-
-The target type ('string', 'number', 'boolean', 'date')
+Gets the ID of this model instance.
+Must be implemented by subclasses.
 
 #### Returns
 
-`any`
+`string` \| `number`
 
-The converted value
+The model ID
+
+***
+
+### save()
+
+> **save**(): `Promise`\<`void`\>
+
+Defined in: [models/model.ts:242](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/model.ts#L242)
+
+Saves the current model instance to the database.
+If the model has an ID, updates the existing record; otherwise creates a new one.
+
+#### Returns
+
+`Promise`\<`void`\>
+
+A promise that resolves when the save is complete
+
+#### Example
+
+```typescript
+const user = await User.find('1');
+user.name.set('New Name');
+await user.save();
+```
 
 ***
 
@@ -118,7 +136,7 @@ The converted value
 
 > `static` **create**\<`T`\>(`this`, `data`): `Promise`\<`T`\>
 
-Defined in: [models/model.ts:105](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/model.ts#L105)
+Defined in: [models/model.ts:105](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/model.ts#L105)
 
 Creates a new record in the database and returns a model instance.
 
@@ -164,7 +182,7 @@ const user = await User.create({
 
 > `static` **find**\<`T`\>(`this`, `id`): `Promise`\<`T`\>
 
-Defined in: [models/model.ts:141](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/model.ts#L141)
+Defined in: [models/model.ts:141](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/model.ts#L141)
 
 Finds a single record by its ID.
 
@@ -211,7 +229,7 @@ console.log(user.name.get());
 
 > `static` **findAll**\<`T`\>(`this`): `Promise`\<`T`[]\>
 
-Defined in: [models/model.ts:190](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/model.ts#L190)
+Defined in: [models/model.ts:190](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/model.ts#L190)
 
 Finds all records in the table.
 
@@ -244,87 +262,19 @@ users.forEach(user => console.log(user.name.get()));
 
 ***
 
-### getId()
+### getTableName()
 
-> `abstract` **getId**(): `string` \| `number`
+> `protected` `static` **getTableName**(): `string`
 
-Defined in: [models/model.ts:227](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/model.ts#L227)
-
-Gets the ID of this model instance.
-Must be implemented by subclasses.
-
-#### Returns
-
-`string` \| `number`
-
-The model ID
-
-***
-
-### save()
-
-> **save**(): `Promise`\<`void`\>
-
-Defined in: [models/model.ts:242](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/model.ts#L242)
-
-Saves the current model instance to the database.
-If the model has an ID, updates the existing record; otherwise creates a new one.
-
-#### Returns
-
-`Promise`\<`void`\>
-
-A promise that resolves when the save is complete
-
-#### Example
-
-```typescript
-const user = await User.find('1');
-user.name.set('New Name');
-await user.save();
-```
-
-***
-
-### delete()
-
-> **delete**(): `Promise`\<`void`\>
-
-Defined in: [models/model.ts:307](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/model.ts#L307)
-
-Deletes this model instance from the database.
-
-#### Returns
-
-`Promise`\<`void`\>
-
-A promise that resolves when the deletion is complete
-
-#### Throws
-
-If the model hasn't been saved to the database yet
-
-#### Example
-
-```typescript
-const user = await User.find('1');
-await user.delete();
-```
-
-***
-
-### toData()
-
-> `private` **toData**(): `Record`\<`string`, `any`\>
-
-Defined in: [models/model.ts:330](https://github.com/danny270793/MyORM/blob/9faec68ed1d5f8ec030994851f3cd734dd1ff811/src/libraries/models/model.ts#L330)
+Defined in: [models/model.ts:55](https://github.com/danny270793/MyORM/blob/0fac4c292463a918ab1d9675c2a165a9298cb0ae/src/libraries/models/model.ts#L55)
 
 **`Internal`**
 
-Converts the model instance to a plain object.
+Gets the table name for this model.
+If tableName is set explicitly, returns that; otherwise generates from class name.
 
 #### Returns
 
-`Record`\<`string`, `any`\>
+`string`
 
-An object containing all column values
+The table name
