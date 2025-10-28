@@ -5,7 +5,7 @@ export class Logger {
     }
 
     write(tag: string, ...messages: any[]): void {
-        if(tag === 'ERROR') {
+        if (tag === 'ERROR') {
             console.error(`${tag}\t${this.name}\t`, ...messages);
         } else {
             console.log(`${tag}\t${this.name}\t`, ...messages);
@@ -13,18 +13,18 @@ export class Logger {
     }
 
     info(...messages: any[]): void {
-        this.write("INFO", ...messages);
+        this.write('INFO', ...messages);
     }
 
     debug(...messages: any[]): void {
-        this.write("DEBUG", ...messages);
+        this.write('DEBUG', ...messages);
     }
 
     warn(...messages: any[]): void {
-        this.write("WARN", ...messages);
+        this.write('WARN', ...messages);
     }
 
     error(...messages: any[]): void {
-        this.write("ERROR", ...messages);
+        this.write('ERROR', ...messages);
     }
 }
