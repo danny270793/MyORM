@@ -1,12 +1,12 @@
-import Database from "better-sqlite3";
-import { PreparedStatement, Query } from "./basics/query";
+import Database from 'better-sqlite3';
+import { PreparedStatement, Query } from './basics/query';
 
 export class DatabaseManager {
     private static instance: DatabaseManager;
     private readonly db: Database.Database;
 
     private constructor() {
-        this.db = new Database(":memory:", { verbose: console.log });
+        this.db = new Database(':memory:', { verbose: console.log });
     }
 
     static getInstance(): DatabaseManager {
